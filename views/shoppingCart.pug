@@ -1,0 +1,51 @@
+extends layout.pug 
+
+block content 
+    body
+        .contariner
+            .row
+                .col-1
+                .col-8
+                    h1.display-4.text-center.border-1.mb-5 Shopping Cart
+                    .row
+                        .col
+                            .row
+                                #accordionExample.accordion
+                                    .accordion-item
+                                        h2#headingOne.accordion-header.container
+                                        button.accordion-button(type='button' data-bs-toggle='collapse' data-bs-target='#collapseOne' aria-expanded='true' aria-controls='collapseOne')
+                                            .col-2
+                                                p item name
+                                            .col-8
+                                            .col-2
+                                                p item price
+                                    .row         
+                                        #collapseOne.accordion-collapse.collapse.show(aria-labelledby='headingOne' data-bs-parent='#accordionExample')
+                                            .accordion-body
+                                                .container
+                                                    .row
+                                                        .col-2
+                                                            p image
+                                                        .col-8
+                                                            P 
+                                                                strong Product Name
+                                                                |  It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the 
+                                                                code .accordion-body
+                                                                | , though the transition does limit overflow.  
+                                                        .col-2
+                                                            .row
+                                                                p color
+                                                            .row
+                                                                p size
+                                                    .row
+                                                        .d-flex.flex-row-reverse.bd-highlight
+                                                            .p-2.bd-highlight 
+                                                                a.btn.btn-danger(href='#' role='button') Delete from cart
+                                                            .p-2.bd-highlight 
+                                                                a.btn.btn-dark(href='#' role='button') Link more info routing to the product page
+                .col-2.text-center.bg-light.bg-gradient
+                    h6.display-6.mt-3 Your Cart Total 
+                    p total
+                    a.btn.btn-dark(href='#' role='button') Buy Now
+                .col-1
+                    

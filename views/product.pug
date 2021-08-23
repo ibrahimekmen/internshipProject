@@ -1,0 +1,146 @@
+extends layout.pug
+
+block content
+    body
+        .container
+            .row
+                h4 #{product.name}
+                // carousel images
+                .col-4
+                    #carouselExampleIndicators.carousel.slide(data-bs-ride='carousel')
+                        .carousel-indicators
+                            - product.image_groups = product.image_groups.filter(imageGroup => imageGroup.view_type === 'large');
+                            if product.image_groups.length !== 1
+                                - product.image_groups.shift();
+                            each image, index in product.image_groups[0].images
+                                if index === 0
+                                    button.active(type='button' data-bs-target='#carouselExampleIndicators' data-bs-slide-to='0' aria-current='true' aria-label='Slide 1')
+                                else
+                                    button(type='button' data-bs-target='#carouselExampleIndicators' data-bs-slide-to=`${index}` aria-label=`Slide ${index+1}`)
+                        .carousel-inner
+                            each image, index in product.image_groups[0].images
+                                if index === 0
+                                    .carousel-item.active
+                                        img.d-block.w-100.carousel-img(id=index src=`/static/images/${image.link}` alt=`${image.alt}`)
+                                else
+                                    .carousel-item
+                                        img.d-block.w-100.carousel-img(id=index src=`/static/images/${image.link}` alt=`${image.alt}`)
+                        button.carousel-control-prev(type='button' data-bs-target='#carouselExampleIndicators' data-bs-slide='prev')
+                            span.carousel-control-prev-icon(aria-hidden='true')
+                            span.visually-hidden Previous
+                        button.carousel-control-next(type='button' data-bs-target='#carouselExampleIndicators' data-bs-slide='next')
+                            span.carousel-control-next-icon(aria-hidden='true')
+                            span.visually-hidden Next
+                
+                // variations part
+                .col-8
+                    p.fs-4 #{product.long_description}
+                    each variation,i in product.variation_attributes
+                        if variation.values.length === 1
+                            - continue;
+                        .row
+                            h6.display-6.mt-4 #{variation.name}
+                        .row
+                            div(class=`btn-group ${variation.name}`)
+                                each value,index in variation.values
+                                    if index === 0
+                                        if value.orderable
+                                            input.btn-check(id=`option-${index+1}-${i}` type='radio' name=`${variation.name}` autocomplete='off' checked='' alt=`${value.value}` )
+                                            label.btn.btn-secondary(for=`option-${index+1}-${i}`) #{value.name}
+                                        else
+                                            input.btn-check(id=`option-${index+1}-${i}` type='radio' name=`${variation.name}` autocomplete='off' checked='' disabled='' alt=`${value.value}`)
+                                            label.btn.btn-secondary(for=`option-${index+1}-${i}`) #{value.name}
+                                    else
+                                        if value.orderable
+                                            input.btn-check(id=`option-${index+1}-${i}` type='radio' name=`${variation.name}` autocomplete='off' alt=`${value.value}`)
+                                            label.btn.btn-secondary(for=`option-${index+1}-${i}`) #{value.name}
+                                        else
+                                            input.btn-check(id=`option-${index+1}-${i}` type='radio' name=`${variation.name}` autocomplete='off' disabled='' alt=`${value.value}`)
+                                            label.btn.btn-secondary(for=`option-${index+1}-${i}`) #{value.name}
+                    .row.mt-5
+                        .col-8
+                            form#form1(action='/cart',  method='post')
+                                input#quantity(type='number' name='quantity'  required='')
+                                button#addToCart.btn.position-relative.btn-dark(type='submit' form="form1") Add to Cart
+                                input(type="hidden" name="productId" value=`${product.id}`)
+                                input#variationId(type="hidden" name="variationId" value=`${product.id}`)
+
+                        .col-4
+                            .row
+                                .col
+                                    p.mt-1 Price: #{product.price}
+                                .col
+                                    select.form-select(aria-label='Default select example')
+                                        option(value='1') USD
+                                        option(value='2') EUR
+                                        option(value='3') TL
+                                        option(value='4') BRL
+        script(src='https://cdn.jsdelivr.net/npm/lodash@4.17.10/lodash.min.js')
+        script.
+            const data = !{JSON.stringify(product.image_groups)};
+            const product = !{JSON.stringify(product)};
+            window.addEventListener('load', function() {
+                if (document.querySelector('.btn-check')) { 
+                    document.querySelectorAll('.btn-check').forEach(function(el) {
+                        let dataFromHtml = el.id.split('-');
+                        let variationType = dataFromHtml[2];
+                        let imageId = dataFromHtml[1];
+                        let variations = {'variation_values' : {}};
+                        if (variationType == 0){ // if variation type is color change the images 
+                            el.addEventListener('click', function (e) {
+                                document.querySelectorAll(".carousel-img").forEach(carouselImage =>{
+                                    selecetedImageGroup = product.image_groups.filter(imageGroup => imageGroup.variation_value === el.alt);
+                                    if(selecetedImageGroup.length !== 0){
+                                        carouselImage.src = "/static/images/" + selecetedImageGroup[0].images[carouselImage.id].link;
+                                        carouselImage.alt = selecetedImageGroup[0].images[carouselImage.id].alt;
+                                    }else{ // if there is no image in the file display no image placeholder
+                                        carouselImage.src = "/static/images/products/large/no-image-placeholder.jpg";
+                                        carouselImage.alt = 'no image';
+                                    }
+                                });
+                                updateProductId(el);
+                            });
+                        }else{
+                            el.addEventListener('click', function (e) {
+                                updateProductId(el);
+                            });
+                        }
+                    });
+                }
+            }); 
+            function evalProductID() { 
+                document.querySelectorAll('.btn-check').forEach(function(el) {
+                    updateProductId(el);
+                });
+            } 
+
+            function updateProductId(el) {
+                let dataFromHtml = el.id.split('-');
+                let variationType = dataFromHtml[2];
+                let imageId = dataFromHtml[1];
+                let variations = {'variation_values' : {}};
+                for(let i = 0; i < product.variation_attributes.length;i++){
+                    let currentProductVariationName = product.variation_attributes[i].name; // color size etc
+                    const rbs = document.querySelectorAll(`input[name='${currentProductVariationName}']`); // radio buttons for a specific variation eg. all the color radio buttons
+                    for(const rb of rbs){
+                        if(rb.checked){
+                            const temp = {[currentProductVariationName.toLowerCase()] : rb.alt}; // key value pair for the selected variation eg. color : white, size : 150
+                            variations.variation_values = Object.assign(variations.variation_values, temp);
+                        }
+                    }
+                }
+                var productID = document.querySelector("#variationId");
+                const tempProductVariants = product.variants;
+                if(product.variation_attributes[0].values.length === 1){
+                    for(const productVariant of tempProductVariants){
+                        delete productVariant.variation_values['color']
+                    }
+                }
+                const currentVariation = tempProductVariants.filter(variant => _.isEqual(variant.variation_values, variations.variation_values));
+                if(currentVariation.length === 0){
+                    document.getElementById('addToCart').disabled = true;
+                }else{
+                    document.getElementById('addToCart').disabled = false;
+                    productID.value = currentVariation[0].product_id;
+                }
+            }

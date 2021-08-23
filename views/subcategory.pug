@@ -1,0 +1,31 @@
+extends layout.pug
+
+block content
+  body
+    // Products
+    .container
+      if products
+        - let i = 0;
+        - while (i < products.length)
+          .row.mt-5
+            .col-md-6.col-sm-1
+              .row
+                h6 #{products[i].name}
+                .col-4
+                  img.img-fluid.rounded.d-none.d-lg-block(src=`/static/images/${products[i].image_groups[0].images[0].link}` alt=`${products[i].image_groups[0].images[0].alt}`)
+                .col-8
+                  p #{products[i].page_description}
+                  p Price: #{products[i].price}
+                  a.btn.btn-info(href=`/${gender}/${currentRoute}/product/${products[i].name}` role='button') More Info
+            if (i < products.length -1)
+              .col-md-6.col-sm-1
+                .row
+                  h6 #{products[i+1].name}
+                  .col-4
+                    img.img-fluid.rounded.d-none.d-lg-block(src=`/static/images/${products[i+1].image_groups[0].images[0].link}` alt=`${products[i+1].image_groups[0].images[0].alt}`)
+                  .col-8
+                    p #{products[i+1].page_description}
+                    p Price: #{products[i+1].price}
+                    a.btn.btn-info(href=`/${gender}/${currentRoute}/product/${products[i+1].name}` role='button') More Info
+          - i = i + 2
+          

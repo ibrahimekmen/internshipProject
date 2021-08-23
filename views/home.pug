@@ -1,0 +1,18 @@
+extends layout.pug 
+
+block content
+    body
+        .container
+            .row
+                h1.display-1.text-center MyClothes
+            .row
+                .col
+                    form(action=`/men`, method='get')
+                        button.btn(type='submit')
+                            img.img-fluid(src=`/static/images/categories/man.jpg`)
+                .col
+                    form(action=`/women`, method='get')
+                        button.btn(type='submit')
+                            img.img-fluid(src=`/static/images/categories/woman.jpg`)
+           
+                            

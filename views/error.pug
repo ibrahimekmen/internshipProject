@@ -1,0 +1,23 @@
+doctype html 
+html(lang="en")
+head
+    title MyClothes
+    // if you have static sheet use this link(rel="stylesheet",href="/static/stylesheets/style.css")
+    
+    meta(charset='utf-8')
+    meta(name='viewport' content='width=device-width, initial-scale=1')
+    // Bootstrap CSS
+    link(href='https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css' rel='stylesheet' integrity='sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We' crossorigin='anonymous')
+body
+    .container.pt-3
+        .row
+            h1.display-1 MyClothes
+            if err
+                h1= err.message
+                h2= err.status
+                pre= err.stack
+            if error
+                h1= error.message
+                h2= error.status
+                pre= error.stack
+            include includes/footer.pug

@@ -1,0 +1,32 @@
+extends layout.pug
+
+block content
+  body
+    // Main Category
+    .container.mt-3
+      h1.display-4 #{name}
+      p.lead.mt-4
+         #{description}
+    // Subcategories
+    .container
+      h1.display-6 #{gender}'s Wear
+      if categories 
+        each category,index in categories 
+          .container
+            .row  
+              h1.display-6(id=`${category.name}`) #{category.name}
+              img.img-fluid.rounded.d-none.d-lg-block(src=`/static/images/${category.image}` alt=`${category.page_title}`)
+              p.lead.mt-4
+                | #{category.page_description}
+              button.btn.btn-outline-dark(type='button' data-bs-toggle='collapse' data-bs-target=`#${category.name}` aria-expanded='false' aria-controls='collapseWidthExample')
+                |View #{category.name} Categories
+              each subcategory, jindex in subcategories
+                  each sub, kindex in subcategory
+                    div(id=`${category.name}` class="collapse")
+                      if subcategories && (category.id === sub.parent_category_id)
+                        form.mt-3.text-center(action=`/${gender}/${sub.id}`, method='get')
+                          button.btn(type='submit')
+                            img(src=`/static/images/${sub.image}`)
+          if index !== categories.length-1
+            hr
+      
