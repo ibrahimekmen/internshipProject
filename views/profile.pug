@@ -25,7 +25,7 @@ block content
                             form#form1(action='/cart' method='get')
                                 button.btn.position-relative(type='submit' form="form1")
                                     img(src="/static/images/profile/shopping-cart.png" alt="Shopping cart icon")
-                                    span.position-absolute.top-0.start-100.translate-middle.badge.rounded-pill.bg-danger #{yo}
+                                    span.position-absolute.top-0.start-100.translate-middle.badge.rounded-pill.bg-danger #{cart.items.length}
                                         span.visually-hidden items in the shopping cart
                     .col-1
                         if(wishlistError)
@@ -37,5 +37,5 @@ block content
                             form#form2(action='/wishlist' method='get')
                                 button.btn.position-relative(type='submit' form="form2")
                                     img(src="/static/images/profile/list.png" alt="Wishlist icon")
-                                    span.position-absolute.top-0.start-100.translate-middle.badge.rounded-pill.bg-danger #{yo}
+                                    span.position-absolute.top-0.start-100.translate-middle.badge.rounded-pill.bg-danger 0
                                         span.visually-hidden items in the wishlist

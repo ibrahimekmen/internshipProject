@@ -11,7 +11,7 @@ function profilePage(req,res,next){
     // token for calling wishlist and cart
     var token = req.session.user.token;
 
-    Promise.all([cartServices.getCart(token),cartServices.getWishlist(token)]).then(data =>{
+    Promise.all([cartServices.getCart(token)]).then(data =>{
         var cartError = false;
         var wishlistError = false;
         
@@ -19,9 +19,9 @@ function profilePage(req,res,next){
             cartError = true;
         }
         
-        if(data[2].error){
-            wishlistError = true;
-        }
+        // if(data[2].error){
+        //     wishlistError = true;
+        // }
         res.render('profile',{
             gender: "Women",
             breadcrumbs: req.breadcrumbs,
