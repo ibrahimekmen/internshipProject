@@ -26,7 +26,7 @@ block content
                       if subcategories && (category.id === sub.parent_category_id)
                         form.mt-3.text-center(action=`/${gender}/${sub.id}`, method='get')
                           button.btn(type='submit')
-                            img(src=`/static/images/${sub.image}`)
+                            img.img-fluid.rounded(src=`/static/images/${sub.image}`)
           if index !== categories.length-1
             hr
       
