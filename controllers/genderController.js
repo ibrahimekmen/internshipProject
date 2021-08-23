@@ -16,13 +16,14 @@ function renderMain(req,res,gender){
 
 function renderSubcategories(req,res,gender){
     const results = differentiateGender(req,gender);
+    console.log(results[0]);
     const categories = results[0];
     const subCategories = results[1];
 
     const { category } = req.params;
     productServices.getProductsByCategory(category).then(data =>{
         res.render('subcategory',{
-            gender: "Women",
+            gender: gender,
             products: data,
             currentRoute: category,
             breadcrumbs: req.breadcrumbs,
