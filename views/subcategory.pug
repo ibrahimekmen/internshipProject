@@ -12,7 +12,9 @@ block content
               .row
                 h6 #{products[i].name}
                 .col-4.d-none.d-lg-block
-                  img.img-fluid.rounded.d-none.d-lg-block(src=`/static/images/${products[i].image_groups[0].images[0].link}` alt=`${products[i].image_groups[0].images[0].alt}`)
+                  form(action=`/${gender}/${currentRoute}/product/${products[i].name}`, method='get')
+                    button.btn(type='submit')
+                      img.img-fluid.rounded.d-none.d-lg-block(src=`/static/images/${products[i].image_groups[0].images[0].link}` alt=`${products[i].image_groups[0].images[0].alt}`)
                 .col-8
                   p #{products[i].page_description}
                   p Price: #{products[i].price}
@@ -22,7 +24,9 @@ block content
                 .row
                   h6 #{products[i+1].name}
                   .col-4.d-none.d-lg-block
-                    img.img-fluid.rounded.d-none.d-lg-block(src=`/static/images/${products[i+1].image_groups[0].images[0].link}` alt=`${products[i+1].image_groups[0].images[0].alt}`)
+                    form(action=`/${gender}/${currentRoute}/product/${products[i].name}`, method='get')
+                        button.btn(type='submit')
+                          img.img-fluid.rounded.d-none.d-lg-block(src=`/static/images/${products[i+1].image_groups[0].images[0].link}` alt=`${products[i+1].image_groups[0].images[0].alt}`)
                   .col-8
                     p #{products[i+1].page_description}
                     p Price: #{products[i+1].price}

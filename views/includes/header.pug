@@ -1,46 +1,23 @@
 header
     .container.pt-3
-        // top right men women buttons
-        .row
-            .col-10
-                h1.display-1
-                  a(href="/" style="color:black; text-decoration:none;") MyClothes
-            if gender === "Men"
-              .col-2.mt-4
-                .btn-group(role='group' aria-label='Basic example')
-                  form.mt-3(action=`/men`, method='get')
-                    button.btn.btn-dark(type='submit')
-                      | Men
-                  form.mt-3(action=`/Women`, method='get')
-                    button.btn.btn-outline-dark(type='submit')
-                      | Women
-            else if gender === "Women"
-              .col-2.mt-4
-                .btn-group(role='group' aria-label='Basic example')
-                  form.mt-3(action=`/men`, method='get')
-                    button.btn.btn-outline-dark(type='submit')
-                      | Men
-                  form.mt-3(action=`/Women`, method='get')
-                    button.btn.btn-dark(type='submit')
-                      | Women
-            else
-              .col-2.mt-4
-                .btn-group(role='group' aria-label='Basic example')
-                  form.mt-3(action=`/men`, method='get')
-                    button.btn.btn-outline-dark(type='submit')
-                      | Men
-                  form.mt-3(action=`/Women`, method='get')
-                    button.btn.btn-outline-dark(type='submit')
-                      | Women
         // navbar
         .row
             nav.navbar.navbar-expand-lg.navbar-light.bg-light
                 .container-fluid
-                    a.navbar-brand(href=`/${gender}`) #{gender}
                     button.navbar-toggler(type='button' data-bs-toggle='collapse' data-bs-target='#navbarSupportedContent' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation')
                       span.navbar-toggler-icon
+                    a.navbar-brand(href="/") MyClothes
                     #navbarSupportedContent.collapse.navbar-collapse
                       ul.navbar-nav.me-auto.mb-2.mb-lg-0
+                        // men women dropdown navbar
+                        li.nav-item.dropdown
+                          a#navbarDropdown.nav-link.navbar-brand.dropdown-toggle(role='button' data-bs-toggle='dropdown' aria-expanded='false') #{gender}
+                          ul.dropdown-menu(aria-labelledby='navbarDropdown')
+                            li
+                              a.dropdown-item(href=`/women`) Women
+                            li
+                              a.dropdown-item(href='/men') Men
+
                         each navbarCategory,index in categories
                           li.nav-item.dropdown
                             a#navbarDropdown.nav-link.dropdown-toggle(role='button' data-bs-toggle='dropdown' aria-expanded='false') #{navbarCategory.name}
