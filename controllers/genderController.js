@@ -16,7 +16,6 @@ function renderMain(req,res,gender){
 
 function renderSubcategories(req,res,gender){
     const results = differentiateGender(req,gender);
-    console.log(results[0]);
     const categories = results[0];
     const subCategories = results[1];
 
