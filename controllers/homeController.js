@@ -4,7 +4,8 @@ function render(req,res){
         categories: req.womenNavbar[0],
         subcategories: req.womenNavbar[1],
         currentRoute: "women",
-        breadcrumbs: req.breadcrumbs
+        breadcrumbs: req.breadcrumbs,
+        allCategories: req.allCategories
     });
 }
 

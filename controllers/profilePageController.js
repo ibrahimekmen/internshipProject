@@ -31,7 +31,8 @@ function profilePage(req,res,next){
             cartError: cartError,
             wishlistError : wishlistError,
             cart: data[0],
-            wishlist: data[2]
+            wishlist: data[2],
+            allCategories: req.allCategories
         });
 
     }).catch(err=>{

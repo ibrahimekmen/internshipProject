@@ -17,7 +17,8 @@ function render(req,res){
             product: data[0],    
             breadcrumbs: req.breadcrumbs,
             categories: categories,
-            subcategories: subCategories
+            subcategories: subCategories,
+            allCategories: req.allCategories
         });
     }).catch(err=>{
         console.log(err);

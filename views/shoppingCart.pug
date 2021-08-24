@@ -42,7 +42,7 @@ block content
                                                         .row
                                                             .d-flex.flex-row-reverse.bd-highlight
                                                                 .p-2.bd-highlight
-                                                                    a.btn.btn-danger(href="/cart" onclick=`sendDelete(event,${cartItem.product[0].id},${cartItem.variation.product_id})`) Delete Item
+                                                                    button.btn.btn-danger.remove(data-productId=`${cartItem.product[0].id}` data-variationId=`${cartItem.variation.product_id}`) Delete Item
                                                                     
                                                                     //- button.btn.btn-dark(type="submit" form="delete") Delete Item
                                                                     //- input(type="hidden" name="productId" value=`${cartItem.product[0].id}`)
@@ -61,15 +61,23 @@ block content
                 .col-1
         script(src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous")
         script.
-            function sendDelete(event, productId, variationId){
-                let xhttp = new XMLHttpRequest();
-                event.preventDefault();
-                xhttp.open("DELETE",'/cart', true);
-                let data = {
-                    "productId" : productId,
-                    "variationId" : variationId
-                }
-                xhttp.send(data);
-            }
-
-                    
+            $('.remove').each(function(index) {
+                $(this).on('click',  function(e){
+                    e.preventDefault();
+                    let removeItemParams = {
+                        "productId" : this.dataset.productid,
+                        "variationId" : this.dataset.variationid,
+                    };
+                    console.log(removeItemParams)
+                    $.ajax({ 
+                        url: '/cart',
+                        type: 'DELETE',
+                        data: removeItemParams,
+                        success: function(data) {
+                            console.log('result ', data);
+                            location.reload();
+                        }
+                    });
+                });
+            });
+                                

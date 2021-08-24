@@ -35,7 +35,14 @@ async function getMenNavbar(){
     return [categoryData,subcategories];
 }
 
+async function getAllCategories(){
+    let response = await fetch(`${process.env.API_URL}/categories?secretKey=${process.env.SECRET_KEY}`);
+    let data = await response.json();
+    return data;
+}
+
 module.exports = {
     getMenNavbar,
-    getWomenNavbar
+    getWomenNavbar,
+    getAllCategories
 }

@@ -13,7 +13,7 @@ router.post('/',mid.requiresLogin,(req,res,next)=>{
     shoppingCartController.addToCart(req,res,next);
 });
 
-router.delete('/',mid.requiresLogin,(req,res,next) =>{
-    shoppingCartController.removeFromCart(req,res,next);
-});
+
+router.delete('/',mid.requiresLogin, shoppingCartController.removeFromCart);
+
 module.exports = router;

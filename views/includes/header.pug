@@ -1,50 +1,53 @@
 header
-    .container.pt-3
-        // navbar
-        .row
-            nav.navbar.navbar-expand-lg.navbar-light.bg-light
-                .container-fluid
-                    button.navbar-toggler(type='button' data-bs-toggle='collapse' data-bs-target='#navbarSupportedContent' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation')
-                      span.navbar-toggler-icon
-                    a.navbar-brand(href="/") MyClothes
-                    #navbarSupportedContent.collapse.navbar-collapse
-                      ul.navbar-nav.me-auto.mb-2.mb-lg-0
-                        // men women dropdown navbar
-                        li.nav-item.dropdown
-                          a#navbarDropdown.nav-link.navbar-brand.dropdown-toggle(role='button' data-bs-toggle='dropdown' aria-expanded='false') #{gender}
-                          ul.dropdown-menu(aria-labelledby='navbarDropdown')
-                            li
-                              a.dropdown-item(href=`/women`) Women
-                            li
-                              a.dropdown-item(href='/men') Men
+  .container.pt-3
+    // navbar
+    .row
+      nav.navbar.navbar-expand-lg.navbar-light.bg-light
+        .container-fluid
+          button.navbar-toggler(type='button' data-bs-toggle='collapse' data-bs-target='#navbarSupportedContent' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation')
+            span.navbar-toggler-icon
+          a.navbar-brand(href="/") MyClothes
+          #navbarSupportedContent.collapse.navbar-collapse
+            ul.navbar-nav.me-auto.mb-2.mb-lg-0
+              // men women dropdown navbar
+              li.nav-item.dropdown
+                a#navbarDropdown.nav-link.navbar-brand.dropdown-toggle(role='button' data-bs-toggle='dropdown' aria-expanded='false') #{gender}
+                ul.dropdown-menu(aria-labelledby='navbarDropdown')
+                  li
+                    a.dropdown-item(href=`/women`) Women
+                  li
+                    a.dropdown-item(href='/men') Men
 
-                        each navbarCategory,index in categories
-                          li.nav-item.dropdown
-                            a#navbarDropdown.nav-link.dropdown-toggle(role='button' data-bs-toggle='dropdown' aria-expanded='false') #{navbarCategory.name}
-                            ul.dropdown-menu(aria-labelledby='navbarDropdown')
-                              each subcategory in subcategories[index]
-                                li
-                                  a.dropdown-item(href=`/${gender}/${subcategory.id}`)=subcategory.name
-                      form.d-flex.mb-2.mb-lg-0
-                        input.form-control.me-2(type='search' placeholder='Search' aria-label='Search')
-                        button.btn.btn-outline-success(type='submit') Search
-                      // right side sign up and sign up
-                      if !currentUser
-                        include authorization.pug
-                      else
-                        div.mx-3
-                          a.btn-btn-dark(href="/logout" style="color:black; text-decoration:none;") Logout
-                          a(href="/profile") 
-                            img.avatar.img-circle.hidden-xs-down(src="/static/images/profile/user.png" style="color:black; text-decoration:none;")
-                      
-        // breadcrumbs
-        .row.mt-2
-            if breadcrumbs
-                nav(aria-label='breadcrumb')
-                    ol(class="breadcrumb")
-                      each crumb, index in breadcrumbs
-                        if crumb
-                          if index == breadcrumbs.length - 1
-                              li(class='breadcrumb-item active' aria-current='page') #{crumb.name}
-                          else
-                              li(class='breadcrumb-item') #[a(href=crumb.url) #{crumb.name}]
+              each navbarCategory,index in categories
+                li.nav-item.dropdown
+                  a#navbarDropdown.nav-link.dropdown-toggle(role='button' data-bs-toggle='dropdown' aria-expanded='false') #{navbarCategory.name}
+                  ul.dropdown-menu(aria-labelledby='navbarDropdown')
+                    each subcategory in subcategories[index]
+                      li
+                        a.dropdown-item(href=`/${gender}/${subcategory.id}`)=subcategory.name
+            form#searchform.d-flex.mb-2.mb-lg-0(action="/search" method="get")
+              input.me-2(id='searchinput' type='text' name="searchString" placeholder='Search' aria-label='Search' required='')
+              button.btn.btn-outline-success(type='submit') Search
+            // right side sign up and sign up
+            if !currentUser
+              include authorization.pug
+            else
+              div.mx-3
+                a.btn-btn-dark(href="/logout" style="color:black; text-decoration:none;") Logout
+                a(href="/profile") 
+                  img.avatar.img-circle.hidden-xs-down(src="/static/images/profile/user.png" style="color:black; text-decoration:none;")             
+    // breadcrumbs
+    .row.mt-2
+      if breadcrumbs
+        nav(aria-label='breadcrumb')
+          ol(class="breadcrumb")
+            each crumb, index in breadcrumbs
+              if crumb
+                if index == breadcrumbs.length - 1
+                    li(class='breadcrumb-item active' aria-current='page') #{crumb.name}
+                else
+                    li(class='breadcrumb-item') #[a(href=crumb.url) #{crumb.name}]
+  
+  script(src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous")
+  script.
+      

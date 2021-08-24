@@ -63,7 +63,7 @@ block content
                                 input#quantity(type='number' name='quantity'  required='')
                                 button#addToCart.btn.position-relative.btn-dark(type='submit' form="form1") Add to Cart
                                 input(type="hidden" name="productId" value=`${product.id}`)
-                                input#variationId(type="hidden" name="variationId" value=`${product.id}`)
+                                input#variationId(type="hidden" name="variationId" value=`${product.variants[0]}`)
 
                         .col-4
                             .row
@@ -106,9 +106,12 @@ block content
                             });
                         }
                     });
+                }else{
+                    let variationIdInput = document.getElementById('variationId');
+                    variationIdInput.value = product.variants[0].product_id;
                 }
             }); 
-            function evalProductID() { 
+            function evalProductID() {
                 document.querySelectorAll('.btn-check').forEach(function(el) {
                     updateProductId(el);
                 });

@@ -10,7 +10,8 @@ async function renderShoppingCart(req,res){
             categories: req.womenNavbar[0],
             subcategories: req.womenNavbar[1],
             user : req.session.user.user,
-            cartItems : data
+            cartItems : data,
+            allCategories: req.allCategories
         });
     }).catch(err=>{
         console.log(err);
@@ -26,7 +27,8 @@ function addToCart(req,res,next){
         productId : req.body.productId,
         variationId : req.body.variationId
     }
-    cartServices.addToCart(addToCartData).then( () => {
+    cartServices.addToCart(addToCartData).then( (data) => {
+        console.log(data);
         res.redirect('back');
     }).catch(err=>{
         next(err);
@@ -67,9 +69,9 @@ async function matchProductIds(token){
 
 function removeFromCart(req,res,next){
     var token = req.session.user.token;
-    removeFromCartData = {
+    var removeFromCartData = {
         token : token,
-        quantity : req.body.productId,
+        productId : req.body.productId,
         variationId : req.body.variationId
     }
     cartServices.removeFromCart(removeFromCartData).then((data) => {

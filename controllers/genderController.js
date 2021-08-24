@@ -10,13 +10,13 @@ function renderMain(req,res,gender){
         categories: categories,
         subcategories: subCategories,
         currentRoute: gender,
-        breadcrumbs: req.breadcrumbs
+        breadcrumbs: req.breadcrumbs,
+        allCategories: req.allCategories
     });
 }
 
 function renderSubcategories(req,res,gender){
     const results = differentiateGender(req,gender);
-    const categories = results[0];
     const subCategories = results[1];
 
     const { category } = req.params;
@@ -27,7 +27,8 @@ function renderSubcategories(req,res,gender){
             currentRoute: category,
             breadcrumbs: req.breadcrumbs,
             categories: categories,
-            subcategories: subCategories
+            subcategories: subCategories,
+            allCategories: req.allCategories
         });
     }).catch(err=>{
         console.log(err);

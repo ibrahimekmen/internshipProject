@@ -10,7 +10,13 @@ async function getMenNavbar(){
     return menNavbarData;
 }
 
+async function getAllCategories(){
+    const allCategories = await utilServices.getAllCategories();
+    return allCategories
+}
+
 module.exports = {
-    getWomenNavbar : getWomenNavbar,
-    getMenNavbar : getMenNavbar
+    getWomenNavbar,
+    getMenNavbar,
+    getAllCategories
 }
