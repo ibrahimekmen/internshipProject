@@ -41,22 +41,23 @@ block content
                         .row
                             h6.display-6.mt-4 #{variation.name}
                         .row
-                            div(class=`btn-group ${variation.name}`)
+                            .row(class=`${variation.name}`)
                                 each value,index in variation.values
-                                    if index === 0
-                                        if value.orderable
-                                            input.btn-check(id=`option-${index+1}-${i}` type='radio' name=`${variation.name}` autocomplete='off' checked='' alt=`${value.value}` )
-                                            label.btn.btn-secondary(for=`option-${index+1}-${i}`) #{value.name}
+                                    .col-2.form-check-inline.mt-2
+                                        if index === 0
+                                            if value.orderable
+                                                input.btn-check(id=`option-${index+1}-${i}` type='radio' name=`${variation.name}` autocomplete='off' checked='' alt=`${value.value}` style="appearance: none;" )
+                                                label.btn.btn-secondary(for=`option-${index+1}-${i}`) #{value.name}
+                                            else
+                                                input.btn-check(id=`option-${index+1}-${i}` type='radio' name=`${variation.name}` autocomplete='off' checked='' disabled='' alt=`${value.value}`)
+                                                label.btn.btn-secondary(for=`option-${index+1}-${i}`) #{value.name}
                                         else
-                                            input.btn-check(id=`option-${index+1}-${i}` type='radio' name=`${variation.name}` autocomplete='off' checked='' disabled='' alt=`${value.value}`)
-                                            label.btn.btn-secondary(for=`option-${index+1}-${i}`) #{value.name}
-                                    else
-                                        if value.orderable
-                                            input.btn-check(id=`option-${index+1}-${i}` type='radio' name=`${variation.name}` autocomplete='off' alt=`${value.value}`)
-                                            label.btn.btn-secondary(for=`option-${index+1}-${i}`) #{value.name}
-                                        else
-                                            input.btn-check(id=`option-${index+1}-${i}` type='radio' name=`${variation.name}` autocomplete='off' disabled='' alt=`${value.value}`)
-                                            label.btn.btn-secondary(for=`option-${index+1}-${i}`) #{value.name}
+                                            if value.orderable
+                                                input.btn-check(id=`option-${index+1}-${i}` type='radio' name=`${variation.name}` autocomplete='off' alt=`${value.value}` style="appearance: none;")
+                                                label.btn.btn-secondary(for=`option-${index+1}-${i}`) #{value.name}
+                                            else
+                                                input.btn-check(id=`option-${index+1}-${i}` type='radio' name=`${variation.name}` autocomplete='off' disabled='' alt=`${value.value}`)
+                                                label.btn.btn-secondary(for=`option-${index+1}-${i}`) #{value.name}
                     .row.mt-5
                         .col-8
                             form#form1(action='/cart',  method='post')

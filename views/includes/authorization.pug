@@ -11,16 +11,16 @@ button.btn.nav-link(type='button' data-bs-toggle='modal' data-bs-target='#signUp
                 form(method='POST' action='/register')
                     div.form-group
                     label.mt-3(for='name') Name:
-                    input#name.form-control(type='text', placeholder='first and last' name='name')
+                    input#name.form-control(type='text', placeholder='first and last' name='name' required='')
                     div.form-group
                     label.mt-3(for='email-signup') Email:
-                    input#email-signup.form-control(type='email', placeholder='name@email.com' name='email')
+                    input#email-signup.form-control(type='email', placeholder='name@email.com' name='email' required='')
                     div.form-group
                     label.mt-3(for='pw-signup') Password:
-                    input#pw-signup.form-control(type='password' name='password')
+                    input#pw-signup.form-control(type='password' name='password' required='')
                     div.form-group
                     label.mt-3(for='pw2-signup') Confirm Password:
-                    input#pw2-signup.form-control(type='password' name='confirmPassword')
+                    input#pw2-signup.form-control(type='password' name='confirmPassword' required='')
                     button.btn.btn-dark.mt-3(type='submit') Sign up
                      
                      
@@ -37,8 +37,8 @@ button.btn.nav-link(type='button' data-bs-toggle='modal' data-bs-target='#signIn
                 form(method='POST' action='/login')
                     div.form-group
                     label.mt-3(for='email') Email:
-                    input#email.form-control(type='email', placeholder='name@email.com' name='email')
+                    input#email.form-control(type='email', placeholder='name@email.com' name='email' required='')
                     div.form-group
                     label.mt-3(for='pw') Password:
-                    input#pw.form-control(type='password' name='password')
+                    input#pw.form-control(type='password' name='password' required='')
                     button.btn.btn-dark.mt-3(type='submit') Sign In

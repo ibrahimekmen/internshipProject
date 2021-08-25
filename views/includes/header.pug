@@ -1,4 +1,14 @@
 header
+  if message.length >= 1
+    if message == "Logged out" || message == "Logged In" || message == "Item added to the shopping cart" || message == "Item removed from the shopping cart"
+      .alert.alert-success.alert-dismissible.fade.show(role='alert')
+        p(style='text-align: center;') #{message}
+        button.btn-close(type='button' data-bs-dismiss='alert' aria-label='Close')
+    else
+      .alert.alert-danger.alert-dismissible.fade.show(role='alert')
+        p(style='text-align: center;') #{message}
+        button.btn-close(type='button' data-bs-dismiss='alert' aria-label='Close')
+
   .container.pt-3
     // navbar
     .row
@@ -48,6 +58,5 @@ header
                 else
                     li(class='breadcrumb-item') #[a(href=crumb.url) #{crumb.name}]
   
-  script(src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous")
-  script.
+  script(src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous")    
       

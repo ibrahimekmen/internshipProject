@@ -1,4 +1,5 @@
 const loginService = require('../services/authenticationServices.js');
+require('dotenv').config();
 
 function login(req,res,next){
     if(req.body.email
@@ -6,7 +7,7 @@ function login(req,res,next){
         const userData = {
             email : req.body.email,
             password : req.body.password,
-            secretKey: "$2a$08$3ZvBsLPjB7q1Fnw/MmMOKejgVskQuF/4wyqFcqhiZEpQ1SywIVHi2"
+            secretKey: `${process.env.SECRET_KEY}`
         };
 
         loginService.logIn(userData).then(data =>{
@@ -19,6 +20,7 @@ function login(req,res,next){
             } else {
                 req.session.userId = data.user._id;
                 req.session.user = data;
+                req.flash('message', 'Logged In');
                 res.redirect('back');
             }
         }).catch(error => {
@@ -57,7 +59,7 @@ function signUp(req,res,next){
             name : req.body.name,
             email : req.body.email,
             password : req.body.password,
-            secretKey: "$2a$08$3ZvBsLPjB7q1Fnw/MmMOKejgVskQuF/4wyqFcqhiZEpQ1SywIVHi2"
+            secretKey: `${process.env.SECRET_KEY}`
         };
 
         loginService.createNewUser(userData).then(data =>{
@@ -69,9 +71,8 @@ function signUp(req,res,next){
         });
 
     }else {
-        const err = new Error('All fields required');
-        err.status = 400;
-        return next(err);
+        req.flash('message', 'All fields required');
+        return res.redirect('back');
     }
 }
 

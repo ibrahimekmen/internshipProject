@@ -5,7 +5,7 @@ function render(req,res){
         subcategories: req.womenNavbar[1],
         currentRoute: "women",
         breadcrumbs: req.breadcrumbs,
-        allCategories: req.allCategories
+        message: req.flash('message')
     });
 }
 

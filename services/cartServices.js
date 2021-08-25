@@ -12,7 +12,6 @@ async function getCart(data){
             'type' : 'bearer' 
         }
     });
-
     return response.json();
 }
 

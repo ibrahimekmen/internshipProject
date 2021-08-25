@@ -1,7 +1,7 @@
 const productServices = require('../services/productServices.js');
 
 function render(req,res){
-    const { productName } = req.params;
+    const productName = req.params.productName.replace("-","/");
     const { category } = req.params;
     let gender = category.split("-")[0];
     gender = gender.replace("s","");
@@ -18,7 +18,7 @@ function render(req,res){
             breadcrumbs: req.breadcrumbs,
             categories: categories,
             subcategories: subCategories,
-            allCategories: req.allCategories
+            message: req.flash('message')
         });
     }).catch(err=>{
         console.log(err);

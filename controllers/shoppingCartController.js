@@ -11,7 +11,7 @@ async function renderShoppingCart(req,res){
             subcategories: req.womenNavbar[1],
             user : req.session.user.user,
             cartItems : data,
-            allCategories: req.allCategories
+            message: req.flash('message')
         });
     }).catch(err=>{
         console.log(err);
@@ -28,7 +28,8 @@ function addToCart(req,res,next){
         variationId : req.body.variationId
     }
     cartServices.addToCart(addToCartData).then( (data) => {
-        console.log(data);
+        console.log("add to cart response", data);
+        req.flash('message', 'Item added to the shopping cart');
         res.redirect('back');
     }).catch(err=>{
         next(err);
@@ -75,6 +76,8 @@ function removeFromCart(req,res,next){
         variationId : req.body.variationId
     }
     cartServices.removeFromCart(removeFromCartData).then((data) => {
+        console.log("remove from cart response", Promise.resolve(data.json()));
+        req.flash('message', 'Item removed from the shopping cart');
         res.redirect('back');
     }).catch(err=>{
         next(err);

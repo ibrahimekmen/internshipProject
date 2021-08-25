@@ -6,6 +6,7 @@ const tracing = require('@sentry/tracing');
 const session = require('express-session');
 const navbarUtil = require('./utils/navbarHelper.js');
 const breadcrumbsUtil = require('./utils/breadCrumbs.js');
+const flash = require('connect-flash');
 const app = express();
 
 sentry.init({
@@ -23,6 +24,9 @@ app.use(session({
     resave: false,
     saveUninitialized: false
 }));
+
+app.use(flash());
+
 
 app.use((req,res,next) =>{
     res.locals.currentUser = req.session.userId;
@@ -76,8 +80,8 @@ app.use((req,res,next)=>{
 app.use((err, req, res, next) => {
     res.locals.error = err;
     const status = err.status || 500;
-    res.status(status);
-    res.render('error',err);
+    console.log(err);
+    next();
 });
 
 app.listen(process.env.PORT || 3000);

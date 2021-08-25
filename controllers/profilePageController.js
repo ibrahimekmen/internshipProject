@@ -32,7 +32,7 @@ function profilePage(req,res,next){
             wishlistError : wishlistError,
             cart: data[0],
             wishlist: data[2],
-            allCategories: req.allCategories
+            message: req.flash('message')
         });
 
     }).catch(err=>{
