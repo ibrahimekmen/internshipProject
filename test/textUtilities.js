@@ -1,12 +1,13 @@
-const expect = require('chai').expect;
-expect.use(require('chai-json'));
+const chai = require('chai');
+const expect = chai.expect;
+chai.use(require('chai-json'))
+chai.use(require('chai-as-promised'));
+chai.use(require("chai-http"));
 
 
-const userData = {
-    name : 'ibrahim',
-    email : 'ibrahimyo@gmail.com',
-    password : 12344321,
-    secretKey: `${process.env.SECRET_KEY}`
-};
-
-expect(createNewUser(userData)).to.be.a.jsonFile();
+// Sanity check
+describe('Mocha', () => {
+    it('should run test using npm', () => {
+        expect(true).to.be.ok;
+    });
+});

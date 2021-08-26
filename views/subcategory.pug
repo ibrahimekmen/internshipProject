@@ -11,7 +11,7 @@ block content
             .col-md-6.col-sm-1
               .row
                 h6 #{products[i].name}
-                - if(products[i].name.includes('/')){products[i].name = products[i].name.replaceAll('/','-'); }
+                - if(products[i].name.includes('/')){products[i].name = products[i].name.replaceAll('/','$'); }
                 .col-4.d-none.d-lg-block
                   form(action=`/${gender}/${currentRoute}/product/${products[i].name}`, method='get')
                     button.btn(type='submit')
@@ -24,7 +24,7 @@ block content
               .col-md-6.col-sm-1
                 .row
                   h6 #{products[i+1].name}
-                  - if(products[i+1].name.includes('/')){products[i+1].name = products[i+1].name.replaceAll('/','-'); }
+                  - if(products[i+1].name.includes('/')){products[i+1].name = products[i+1].name.replaceAll('/','$'); }
                   .col-4.d-none.d-lg-block
                     form(action=`/${gender}/${currentRoute}/product/${products[i+1].name}`, method='get')
                       button.btn(type='submit')

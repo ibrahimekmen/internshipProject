@@ -55,7 +55,7 @@ async function removeFromCart(data){
         },
         authentication : {
             'token' : data.token,
-            'type' : 'bearer' 
+            'type' : 'bearer'
         },
         body : JSON.stringify(bodyData)
     }).catch(error =>{

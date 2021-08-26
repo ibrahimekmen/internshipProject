@@ -14,7 +14,7 @@ async function createNewUser(userData){
         referrerPolicy: 'no-referrer', 
         body: JSON.stringify(userData)
     });
-    return response.json();
+    return await response.json();
 }
 
 async function logIn(userData){

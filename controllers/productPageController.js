@@ -1,7 +1,7 @@
 const productServices = require('../services/productServices.js');
 
 function render(req,res){
-    const productName = req.params.productName.replace("-","/");
+    const productName = req.params.productName.replace("$","/");
     const { category } = req.params;
     let gender = category.split("-")[0];
     gender = gender.replace("s","");
