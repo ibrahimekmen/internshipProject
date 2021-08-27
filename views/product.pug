@@ -2,7 +2,7 @@ extends layout.pug
 
 block content
     body
-        .container
+        .container(onload='evalProductId')
             .row
                 h4 #{product.name}
                 // carousel images
@@ -61,11 +61,15 @@ block content
                     .row.mt-5
                         .col-8
                             form#form1(action='/cart',  method='post')
-                                input#quantity(type='number' name='quantity'  required='')
-                                button#addToCart.btn.position-relative.btn-dark(type='submit' form="form1") Add to Cart
-                                input(type="hidden" name="productId" value=`${product.id}`)
-                                input#variationId(type="hidden" name="variationId" value=`${product.variants[0]}`)
-
+                                .container
+                                    .row
+                                        .col-5
+                                            input#quantity(type='number' name='quantity'  required='')
+                                        .col-4
+                                            button#addToCart.btn.position-relative.btn-dark(type='submit' form="form1") Add to Cart
+                                            input(type="hidden" name="productId" value=`${product.id}`)
+                                            input.variationId(type="hidden" name="variationId" value=`${product.variants[0]}`)
+                                        .col-3
                         .col-4
                             .row
                                 .col
@@ -76,6 +80,18 @@ block content
                                         option(value='2') EUR
                                         option(value='3') TL
                                         option(value='4') BRL
+                    .row.mt-5
+                        .col-8
+                            form#form2(action='/wishlist',  method='post')
+                                .container
+                                    .row
+                                        .col-5
+                                            input#quantity(type='number' name='quantity'  required='')
+                                        .col-4
+                                            button#addToWishlist.btn.position-relative.btn-info(type='submit' form="form2") Add to Wishlist
+                                            input.productId(type="hidden" name="productId" value=`${product.id}`)
+                                            input.variationId(type="hidden" name="variationId" value=`${product.variants[0]}`)
+                                        .col-3 
         script(src='https://cdn.jsdelivr.net/npm/lodash@4.17.10/lodash.min.js')
         script.
             const data = !{JSON.stringify(product.image_groups)};
@@ -108,8 +124,10 @@ block content
                         }
                     });
                 }else{
-                    let variationIdInput = document.getElementById('variationId');
-                    variationIdInput.value = product.variants[0].product_id;
+                    let variationIdInputs = document.getElementsByClassName('variationId');
+                    for(const variationIdInput of variationIdInputs){
+                        variationIdInput.value = product.variants[0].product_id;
+                    }
                 }
             }); 
             function evalProductID() {
@@ -133,7 +151,7 @@ block content
                         }
                     }
                 }
-                var productID = document.querySelector("#variationId");
+                const productIDs = document.getElementsByClassName("variationId");
                 const tempProductVariants = product.variants;
                 if(product.variation_attributes[0].values.length === 1){
                     for(const productVariant of tempProductVariants){
@@ -143,8 +161,12 @@ block content
                 const currentVariation = tempProductVariants.filter(variant => _.isEqual(variant.variation_values, variations.variation_values));
                 if(currentVariation.length === 0){
                     document.getElementById('addToCart').disabled = true;
+                    document.getElementById('addToWishlist').disabled = true;
                 }else{
                     document.getElementById('addToCart').disabled = false;
-                    productID.value = currentVariation[0].product_id;
+                    document.getElementById('addToWishlist').disabled = false;
+                    for(const productID of productIDs){
+                        productID.value = currentVariation[0].product_id;
+                    }
                 }
             }

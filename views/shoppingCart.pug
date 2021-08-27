@@ -10,73 +10,55 @@ block content
                     .row
                         .col
                             .row
-                                each cartItem, index in cartItems
-                                    div(id=`accordion-${index}` class="accordion")
-                                        .accordion-item
-                                            h2.accordion-header.container(id=`heading-${index}`)
-                                            button.accordion-button(type='button' data-bs-toggle='collapse' data-bs-target=`#collapse-${index}` aria-expanded='true' aria-controls=`collapse-${index}`)
-                                                .col-2
-                                                    p #{cartItem.product[0].name}
-                                                .col-8
-                                                .col-1
-                                                    p #{cartItem.quantity}
-                                                .col-1
-                                                    p #{cartItem.product[0].price * cartItem.quantity}
-                                        .row         
-                                            .accordion-collapse.collapse(id=`collapse-${index}` aria-labelledby=`heading-${index}` data-bs-parent=`#accordion-${index}`)
-                                                .accordion-body
-                                                    .container
-                                                        .row
-                                                            .col-2
-                                                                if cartItem.images.length == 0
-                                                                    img.img-fluid(src="/static/images/products/large/no-image-placeholder.jpg" alt="no image")
-                                                                else
-                                                                    img.img-fluid(src=`/static/images/${cartItem.images[0].link}` alt=`${cartItem.images[0].alt}`)
-                                                            .col-8
-                                                                P #{cartItem.product[0].long_description}
-                                                            .col-2
-                                                                each variation_value in cartItem.variationValues
-                                                                    .row
-                                                                        .col 
-                                                                            p #{variation_value.variation_name}: #{variation_value.variation_value}
-                                                        .row
-                                                            .d-flex.flex-row-reverse.bd-highlight
-                                                                .p-2.bd-highlight
-                                                                    button.btn.btn-danger.remove(data-productId=`${cartItem.product[0].id}` data-variationId=`${cartItem.variation.product_id}`) Delete Item
-                                                                    
-                                                                    //- button.btn.btn-dark(type="submit" form="delete") Delete Item
-                                                                    //- input(type="hidden" name="productId" value=`${cartItem.product[0].id}`)
-                                                                    //- input(type="hidden" name="variationId" value=`${cartItem.variation.product_id}`)
-                                                                .p-2.bd-highlight
-                                                                    - let productUrl = cartItem.product[0].primary_category_id.split("-")[0].replace("s","") + "/" + cartItem.product[0].primary_category_id + "/product/" + cartItem.product[0].name
-                                                                    form#info(action=`${productUrl}` method="get")
-                                                                        button.btn.btn-dark(type="submit" form="info") More Info
+                                if cartItems
+                                    each cartItem, index in cartItems
+                                        div(id=`accordion-${index}` class="accordion")
+                                            .accordion-item
+                                                h2.accordion-header.container(id=`heading-${index}`)
+                                                button.accordion-button(type='button' data-bs-toggle='collapse' data-bs-target=`#collapse-${index}` aria-expanded='true' aria-controls=`collapse-${index}`)
+                                                    .col-2
+                                                        p #{cartItem.product[0].name}
+                                                    .col-8
+                                                    .col-1
+                                                        p #{cartItem.quantity}
+                                                    .col-1
+                                                        p #{cartItem.product[0].price * cartItem.quantity}
+                                            .row         
+                                                .accordion-collapse.collapse(id=`collapse-${index}` aria-labelledby=`heading-${index}` data-bs-parent=`#accordion-${index}`)
+                                                    .accordion-body
+                                                        .container
+                                                            .row
+                                                                .col-2
+                                                                    if cartItem.images.length == 0
+                                                                        img.img-fluid(src="/static/images/products/large/no-image-placeholder.jpg" alt="no image")
+                                                                    else
+                                                                        img.img-fluid(src=`/static/images/${cartItem.images[0].link}` alt=`${cartItem.images[0].alt}`)
+                                                                .col-8
+                                                                    P #{cartItem.product[0].long_description}
+                                                                .col-2
+                                                                    each variation_value in cartItem.variationValues
+                                                                        .row
+                                                                            .col 
+                                                                                p #{variation_value.variation_name}: #{variation_value.variation_value}
+                                                            .row
+                                                                .d-flex.flex-row-reverse.bd-highlight
+                                                                    .p-2.bd-highlight
+                                                                        form#remove(action=`/cart/delete` method="post")
+                                                                            button.btn.btn-danger(type="submit" form="remove") Delete Item
+                                                                            input(type="hidden" name='productId' value=`${cartItem.product[0].id}` )
+                                                                            input(type="hidden" name='variationId' value=`${cartItem.variation.product_id}`)
+                                                                    .p-2.bd-highlight
+                                                                        - let productUrl = cartItem.product[0].primary_category_id.split("-")[0].replace("s","") + "/" + cartItem.product[0].primary_category_id + "/product/" + cartItem.product[0].name
+                                                                        form#info(action=`${productUrl}` method="get")
+                                                                            button.btn.btn-dark(type="submit" form="info") More Info
+                                else
+                                    h1.display-4.text-center.border-1.mb-5 Your Cart is Empty
                 .col-2.text-center.bg-light.bg-gradient
                     h6.display-6.mt-3 Your Cart Total
-                    -let totalPrice = 0;
-                    each item in cartItems
-                        -totalPrice += item.product[0].price * item.quantity
-                    p #{totalPrice}
+                    if cartItems
+                        -let totalPrice = 0;
+                        each item in cartItems
+                            -totalPrice += item.product[0].price * item.quantity
+                        p #{totalPrice}
                     a.btn.btn-dark(href='#' role='button') Buy Now
-                .col-1
-        script(src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous")
-        script.
-            $('.remove').each(function(index) {
-                $(this).on('click',  function(e){
-                    e.preventDefault();
-                    let removeItemParams = {
-                        "productId" : this.dataset.productid,
-                        "variationId" : this.dataset.variationid,
-                    };
-                    $.ajax({ 
-                        url: '/cart',
-                        type: 'DELETE',
-                        data: removeItemParams,
-                        success: function(data) {
-                            console.log('result ', data);
-                            location.reload();
-                        }
-                    });
-                });
-            });
-                                
+                .col-1                                

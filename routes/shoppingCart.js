@@ -14,6 +14,8 @@ router.post('/',mid.requiresLogin,(req,res,next)=>{
 });
 
 
-router.delete('/',mid.requiresLogin, shoppingCartController.removeFromCart);
+router.post('/delete',mid.requiresLogin, (req,res,next) =>{
+    shoppingCartController.removeFromCart(req,res,next);
+});
 
 module.exports = router;

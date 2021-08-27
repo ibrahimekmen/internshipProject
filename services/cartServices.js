@@ -61,7 +61,7 @@ async function removeFromCart(data){
     }).catch(error =>{
         console.log(error);
     });
-    return await response.json();
+    return await response;
 }
 
 module.exports = {

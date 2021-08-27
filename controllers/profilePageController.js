@@ -1,17 +1,18 @@
 const cartServices = require('../services/cartServices.js');
+const wishlistServices = require('../services/wishlistServices.js');
 
 
 function profilePage(req,res,next){
-    if(! req.session.userId){       
+    if(! req.cookies.userId){       
         var err = new Error("You must sign up to view your profile(if you already have a account)");
         err.status = 403;
         return next(err);
     }
 
     // token for calling wishlist and cart
-    var token = req.session.user.token;
+    var token = req.cookies.user.token;
 
-    Promise.all([cartServices.getCart(token)]).then(data =>{
+    Promise.all([cartServices.getCart(token),wishlistServices.getWishlist(token)]).then(data =>{
         var cartError = false;
         var wishlistError = false;
         
@@ -19,19 +20,19 @@ function profilePage(req,res,next){
             cartError = true;
         }
         
-        // if(data[2].error){
-        //     wishlistError = true;
-        // }
+        if(data[1].error){
+            wishlistError = true;
+        }
         res.render('profile',{
             gender: "Women",
             breadcrumbs: req.breadcrumbs,
             categories: req.womenNavbar[0],
             subcategories:req.womenNavbar[1],
-            user : req.session.user.user,
+            user : req.cookies.user.user,
             cartError: cartError,
             wishlistError : wishlistError,
             cart: data[0],
-            wishlist: data[2],
+            wishlist: data[1],
             message: req.flash('message')
         });
 

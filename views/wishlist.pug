@@ -1,0 +1,54 @@
+extends layout.pug 
+
+block content 
+    body
+        .contariner
+            .row
+                h1.display-4.text-center.border-1.mb-5 Wishlist
+                .row
+                    .col
+                        .row
+                            if wishlistItems
+                                each wishlistItem, index in wishlistItems
+                                    div(id=`accordion-${index}` class="accordion")
+                                        .accordion-item
+                                            h2.accordion-header.container(id=`heading-${index}`)
+                                            button.accordion-button(type='button' data-bs-toggle='collapse' data-bs-target=`#collapse-${index}` aria-expanded='true' aria-controls=`collapse-${index}`)
+                                                .col-2
+                                                    p #{wishlistItem.product[0].name}
+                                                .col-8
+                                                .col-1
+                                                    p #{wishlistItem.quantity}
+                                                .col-1
+                                                    p #{wishlistItem.product[0].price * wishlistItem.quantity}
+                                        .row         
+                                            .accordion-collapse.collapse(id=`collapse-${index}` aria-labelledby=`heading-${index}` data-bs-parent=`#accordion-${index}`)
+                                                .accordion-body
+                                                    .container
+                                                        .row
+                                                            .col-2
+                                                                if wishlistItem.images.length == 0
+                                                                    img.img-fluid(src="/static/images/products/large/no-image-placeholder.jpg" alt="no image")
+                                                                else
+                                                                    img.img-fluid(src=`/static/images/${wishlistItem.images[0].link}` alt=`${wishlistItem.images[0].alt}`)
+                                                            .col-8
+                                                                P #{wishlistItem.product[0].long_description}
+                                                            .col-2
+                                                                each variation_value in wishlistItem.variationValues
+                                                                    .row
+                                                                        .col 
+                                                                            p #{variation_value.variation_name}: #{variation_value.variation_value}
+                                                        .row
+                                                            .d-flex.flex-row-reverse.bd-highlight
+                                                                .p-2.bd-highlight
+                                                                    form#remove(action=`/wishlist/delete` method="post")
+                                                                        button.btn.btn-danger(type="submit" form="remove") Delete Item
+                                                                        input(type="hidden" name='productId' value=`${wishlistItem.product[0].id}` )
+                                                                        input(type="hidden" name='variationId' value=`${wishlistItem.variation.product_id}`)
+                                                                .p-2.bd-highlight
+                                                                    - let productUrl = wishlistItem.product[0].primary_category_id.split("-")[0].replace("s","") + "/" + wishlistItem.product[0].primary_category_id + "/product/" + wishlistItem.product[0].name
+                                                                    form#info(action=`${productUrl}` method="get")
+                                                                        button.btn.btn-dark(type="submit" form="info") More Info
+                            else
+                                h1.display-4.text-center.border-1.mb-5 Your Wishlist is Empty
+                                

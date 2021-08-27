@@ -18,8 +18,8 @@ function login(req,res,next){
                 console.error(err);
                 res.render("error");
             } else {
-                req.session.userId = data.user._id;
-                req.session.user = data;
+                res.cookie('userId',data.user._id);
+                res.cookie('user',data);
                 req.flash('message', 'Logged In');
                 res.redirect('back');
             }
@@ -35,14 +35,12 @@ function login(req,res,next){
 }
 
 function logout(req,res,next){
-    if(req.session){
-        req.session.destroy((err)=>{
-            if(err){
-                return next(err);
-            }else{
-                return res.redirect('/');
-            }
-        });
+    if(req.cookies.userId){
+        res.clearCookie('userId');
+        res.clearCookie('user');
+        return res.redirect('/');
+    }else{
+        next();
     }
 }
 
@@ -63,7 +61,8 @@ function signUp(req,res,next){
         };
 
         loginService.createNewUser(userData).then(data =>{
-            req.session.userId = data.user._id;
+            res.cookie('userId', data.user._id);
+            res.cookie('user',data);
             req.params.userData = data.user;
             return res.redirect('/profile');
         }).catch(error => {
@@ -71,7 +70,7 @@ function signUp(req,res,next){
         });
 
     }else {
-        req.flash('message', 'All fields required');
+        //req.flash('message', 'All fields required');
         return res.redirect('back');
     }
 }

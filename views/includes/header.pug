@@ -1,6 +1,6 @@
 header
   if message.length >= 1
-    if message == "Logged out" || message == "Logged In" || message == "Item added to the shopping cart" || message == "Item removed from the shopping cart"
+    if message == "Logged out" || message == "Logged In" || message == "Item added to the shopping cart" || message == "Item removed from the shopping cart" || message == "Item added to the wishlist" || message == 'Item removed from the wishlist'
       .alert.alert-success.alert-dismissible.fade.show(role='alert')
         p(style='text-align: center;') #{message}
         button.btn-close(type='button' data-bs-dismiss='alert' aria-label='Close')
@@ -16,7 +16,7 @@ header
         .container-fluid
           button.navbar-toggler(type='button' data-bs-toggle='collapse' data-bs-target='#navbarSupportedContent' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation')
             span.navbar-toggler-icon
-          a.navbar-brand(href="/") MyClothes
+          a.navbar-brand(href="/") Ali Bazon
           #navbarSupportedContent.collapse.navbar-collapse
             ul.navbar-nav.me-auto.mb-2.mb-lg-0
               // men women dropdown navbar
@@ -44,8 +44,12 @@ header
             else
               div.mx-3
                 a.btn-btn-dark(href="/logout" style="color:black; text-decoration:none;") Logout
-                a(href="/profile") 
-                  img.avatar.img-circle.hidden-xs-down(src="/static/images/profile/user.png" style="color:black; text-decoration:none;")             
+                a.mx-2(href="/profile")
+                  img.avatar.img-circle.hidden-xs-down(src="/static/images/profile/user.png" alt="Profile" style="color:black; text-decoration:none;")
+                a.mx-2(href='/cart')
+                  img.avatar.img-circle.hiddeb-xs-down(src="/static/images/profile/shopping-cart-32.png" alt="Shopping Cart" style="color:black; text-decoration:none;")
+                a.mx-2(href='/wishlist')
+                  img.avatar.img-circle.hiddeb-xs-down(src="/static/images/profile/list-32.png" alt="Wishlist" style="color:black; text-decoration:none;")        
     // breadcrumbs
     .row.mt-2
       if breadcrumbs
