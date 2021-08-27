@@ -1,19 +1,22 @@
-const { mockRequest, mockResponse, mockNext } = require('./utils/interceptor');
+const { mockRequest, mockResponse, mockNext } = require('../utils/interceptor');
 //const { getMockReq, getMockRes } = require('@jest-mock/express');
-const authenticationController = require('./controllers/authenticationController');
+const authenticationController = require('../controllers/authenticationController');
 const randomstring = require("randomstring");
 
 function randomString(length){
     return randomstring.generate({ length: length, charset: 'alphabetic'});
 }
 
-describe('SignIn testing', () => {
+describe('SignUp testing', () => {
     test('it redirects with error if the user already exists', async () => {
+        const password = randomString(20);
         const req = mockRequest({
             body: {
                 email: randomString(15) + '@gmail.com',
-                password: randomString(20),
+                password: password,
+                confirmPassword: password,
             },
+            redirect: 'back'
         });
         const res = mockResponse();
         await authenticationController.signUp(req, res);
@@ -23,12 +26,14 @@ describe('SignIn testing', () => {
     });
 
     test('it redirects with redirect querystring if req.body had it', async () => {
+        const password = randomString(20);
         const req = mockRequest({
             body: {
                 email: randomString(15) + '@gmail.com',
-                password: randomString(20),
-                redirect: '/somewhere/there',
+                password: password,
+                confirmPassword: password
             },
+            redirect: 'back'
         });
         const res = mockResponse();
         await authenticationController.signUp(req, res);
@@ -43,7 +48,9 @@ describe('SignIn testing', () => {
             body: {
                 email: '123@gmail.com',
                 password: '123',
+                confirmPassword: '123'
             },
+            redirect: 'back'
         });
         const res = mockResponse();
         await authenticationController.signUp(req, res);
