@@ -35,7 +35,7 @@ async function addToWishlist(data){
         },
         body : JSON.stringify(bodyData)
     }).catch(error =>{
-        console.log(error);
+        console.error(error);
     });
     return await response.json();
 }
@@ -59,7 +59,7 @@ async function removeFromWishlist(data){
         },
         body : JSON.stringify(bodyData)
     }).catch(error =>{
-        console.log(error);
+        console.error(error);
     });
     return await response;
 }

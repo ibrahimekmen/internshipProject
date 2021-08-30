@@ -21,7 +21,7 @@ function render(req,res){
             message: req.flash('message')
         });
     }).catch(err=>{
-        console.log(err);
+        console.error(err);
     });
 }
 

@@ -24,7 +24,7 @@ function login(req,res,next){
                 res.redirect('back');
             }
         }).catch(error => {
-            console.log(error);
+            console.error(error);
         });
 
     }else {
@@ -61,10 +61,15 @@ function signUp(req,res,next){
         };
 
         loginService.createNewUser(userData).then(data =>{
-            res.cookie('userId', data.user._id);
-            res.cookie('user',data);
-            req.params.userData = data.user;
-            return res.redirect('/profile');
+            if(data.error){
+                console.error(error);
+                res.redirect('back');
+            }else{
+                res.cookie('userId', data.user._id);
+                res.cookie('user',data);
+                req.params.userData = data.user;
+                res.redirect('/profile');
+            }
         }).catch(error => {
             console.error(error);
         });

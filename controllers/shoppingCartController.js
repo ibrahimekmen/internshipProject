@@ -14,7 +14,7 @@ async function renderShoppingCart(req,res){
             message: req.flash('message')
         });
     }).catch(err=>{
-        console.log(err);
+        console.error(err);
         res.render("error",err.error);
     });
 }

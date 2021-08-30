@@ -32,7 +32,7 @@ function renderSubcategories(req,res,gender){
             message: req.flash('message')
         });
     }).catch(err=>{
-        console.log(err);
+        console.error(err);
     });
 }
 

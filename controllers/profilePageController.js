@@ -12,7 +12,7 @@ function profilePage(req,res,next){
     // token for calling wishlist and cart
     var token = req.cookies.user.token;
 
-    Promise.all([cartServices.getCart(token),wishlistServices.getWishlist(token)]).then(data =>{
+    return Promise.all([cartServices.getCart(token),wishlistServices.getWishlist(token)]).then(data =>{
         var cartError = false;
         var wishlistError = false;
         
@@ -37,7 +37,7 @@ function profilePage(req,res,next){
         });
 
     }).catch(err=>{
-        console.log(err);
+        console.error(err);
         res.render("error",err);
     });
 }
