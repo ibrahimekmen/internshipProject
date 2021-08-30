@@ -102,7 +102,7 @@ block content
         script.
             const data = !{JSON.stringify(product.image_groups)};
             const product = !{JSON.stringify(product)};
-            let cUser = !{JSON.stringify(currentUser)};
+            const cUser = !{JSON.stringify(currentUser)}
             window.addEventListener('load', function() {
                 if (document.querySelector('.btn-check')) { 
                     document.querySelectorAll('.btn-check').forEach(function(el) {
@@ -123,7 +123,7 @@ block content
                                     }
                                 });
                                 if (cUser){
-                                     updateProductId(el);
+                                    updateProductId(el);
                                 }
                                    
                             });

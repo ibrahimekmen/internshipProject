@@ -34,9 +34,7 @@ app.use('/static',express.static('./public'));
 app.set('view engine','pug');
 
 app.use((req,res,next) =>{
-    console.log(req.cookies.userId);
     res.locals.currentUser = req.cookies.userId;
-    console.log(res.locals.currentUser);
     next();
 });
 
