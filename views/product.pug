@@ -66,7 +66,10 @@ block content
                                         .col-5
                                             input#quantity(type='number' name='quantity'  required='')
                                         .col-4
-                                            button#addToCart.btn.position-relative.btn-dark(type='submit' form="form1") Add to Cart
+                                            if currentUser
+                                                button#addToCart.btn.position-relative.btn-dark(type='submit' form="form1") Add to Cart
+                                            else
+                                                button#addToCart.btn.position-relative.btn-dark(type='submit' form="form1" disabled='') Add to Cart
                                             input(type="hidden" name="productId" value=`${product.id}`)
                                             input.variationId(type="hidden" name="variationId" value=`${product.variants[0]}`)
                                         .col-3
@@ -88,7 +91,10 @@ block content
                                         .col-5
                                             input#quantity(type='number' name='quantity'  required='')
                                         .col-4
-                                            button#addToWishlist.btn.position-relative.btn-info(type='submit' form="form2") Add to Wishlist
+                                            if currentUser
+                                                button#addToWishlist.btn.position-relative.btn-info(type='submit' form="form2") Add to Wishlist
+                                            else
+                                                button#addToWishlist.btn.position-relative.btn-info(type='submit' form="form2" disabled='') Add to Wishlist
                                             input.productId(type="hidden" name="productId" value=`${product.id}`)
                                             input.variationId(type="hidden" name="variationId" value=`${product.variants[0]}`)
                                         .col-3 
