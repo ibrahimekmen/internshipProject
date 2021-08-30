@@ -102,6 +102,7 @@ block content
         script.
             const data = !{JSON.stringify(product.image_groups)};
             const product = !{JSON.stringify(product)};
+            let cUser = !{JSON.stringify(currentUser)};
             window.addEventListener('load', function() {
                 if (document.querySelector('.btn-check')) { 
                     document.querySelectorAll('.btn-check').forEach(function(el) {
@@ -121,15 +122,15 @@ block content
                                         carouselImage.alt = 'no image';
                                     }
                                 });
-                                if (currentUser){
+                                if (cUser){
                                      updateProductId(el);
                                 }
                                    
                             });
                         }else{
                             el.addEventListener('click', function (e) {
-                                if (currentUser){
-                                     updateProductId(el);
+                                if (cUser){
+                                    updateProductId(el);
                                 }
                             });
                         }
@@ -143,13 +144,14 @@ block content
             }); 
             function evalProductID() {
                 document.querySelectorAll('.btn-check').forEach(function(el) {
-                    if (currentUser){
+                    if (cUser){
                         updateProductId(el);
                     }
                 });
             } 
 
             function updateProductId(el) {
+                console.log('yo');
                 let dataFromHtml = el.id.split('-');
                 let variationType = dataFromHtml[2];
                 let imageId = dataFromHtml[1];
