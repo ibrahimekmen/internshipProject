@@ -2,7 +2,6 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const sentry = require('@sentry/node');
-const tracing = require('@sentry/tracing');
 const session = require('express-session');
 const navbarUtil = require('./utils/navbarHelper.js');
 const breadcrumbsUtil = require('./utils/breadCrumbs.js');
@@ -15,10 +14,6 @@ sentry.init({
     tracesSampleRate: 1.0,
 });
 
-const transaction = sentry.startTransaction({
-    op: "test",
-    name: "My First Test Transaction",
-});
 
 app.use(session({
     secret: "yo albuquerque",
