@@ -121,11 +121,16 @@ block content
                                         carouselImage.alt = 'no image';
                                     }
                                 });
-                                updateProductId(el);
+                                if (currentUser){
+                                     updateProductId(el);
+                                }
+                                   
                             });
                         }else{
                             el.addEventListener('click', function (e) {
-                                updateProductId(el);
+                                if (currentUser){
+                                     updateProductId(el);
+                                }
                             });
                         }
                     });
@@ -138,7 +143,9 @@ block content
             }); 
             function evalProductID() {
                 document.querySelectorAll('.btn-check').forEach(function(el) {
-                    updateProductId(el);
+                    if (currentUser){
+                        updateProductId(el);
+                    }
                 });
             } 
 
